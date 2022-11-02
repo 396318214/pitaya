@@ -10,20 +10,20 @@ import (
 // PitayaConfig provides configuration for a pitaya app
 type PitayaConfig struct {
 	Heartbeat struct {
-		Interval time.Duration
+		Interval time.Duration	//心跳间隔
 	}
 	Handler struct {
 		Messages struct {
-			Compression bool
+			Compression bool	//是否压缩消息
 		}
 	}
 	Buffer struct {
 		Agent struct {
-			Messages int
+			Messages int	//每个代理缓冲区大小
 		}
 		Handler struct {
-			LocalProcess  int
-			RemoteProcess int
+			LocalProcess  int	//本地消息处理器缓冲区大小
+			RemoteProcess int	//远端消息处理器缓冲区大小
 		}
 	}
 	Concurrency struct {

@@ -346,17 +346,21 @@ func (app *App) listen() {
 	timer.GlobalTicker = time.NewTicker(timer.Precision)
 
 	logger.Log.Infof("starting server %s:%s", app.server.Type, app.server.ID)
+	// 可以选择有几个派发处理器
 	for i := 0; i < app.config.Concurrency.Handler.Dispatch; i++ {
 		go app.handlerService.Dispatch(i)
 	}
+	//对TCP、WS连接器处理
 	for _, acc := range app.acceptors {
 		a := acc
 		go func() {
+			// accept来了之后新建client agent，并对每一个连接开启读写协程（读写分离）
 			for conn := range a.GetConnChan() {
 				go app.handlerService.Handle(conn)
 			}
 		}()
 
+		// 接收accept连接
 		go func() {
 			a.ListenAndServe()
 		}()

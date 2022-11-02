@@ -170,7 +170,7 @@ func (r *RemoteService) SessionBindRemote(ctx context.Context, msg *protos.BindM
 	}, nil
 }
 
-// PushToUser sends a push to user
+// PushToUser sends a push to user 发送给客户端
 func (r *RemoteService) PushToUser(ctx context.Context, push *protos.Push) (*protos.Response, error) {
 	logger.Log.Debugf("sending push to user %s: %v", push.GetUid(), string(push.Data))
 	s := r.sessionPool.GetSessionByUID(push.GetUid())
